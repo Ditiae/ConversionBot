@@ -76,9 +76,16 @@ class ChannelList(commands.Cog):
         await msg.add_reaction(u"\u25B6")
 
     @commands.command(name="giverole")
+    @commands.cooldown(1, 60, commands.BucketType.user)
     async def giverole(self, ctx):
-        await ctx.message.author.add_roles(discord.utils.get(ctx.message.author.guild.roles, name="YT Archive"))
-        await ctx.send("Role given, enjoy.")
+        role = discord.utils.get(ctx.message.author.guild.roles, name="YT Archive")
+        user = ctx.message.author
+        if role not in ctx.message.author.roles:
+            await user.add_roles(role)
+            await ctx.send("Role given, enjoy.")
+        else:
+            await user.remove_roles(role)
+            await ctx.send("Role removed, enjoy.")
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
