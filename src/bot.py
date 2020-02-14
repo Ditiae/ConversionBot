@@ -4,6 +4,7 @@ import discord
 import logging
 import pint
 import re
+import systemd.daemon
 from configparser import ConfigParser
 from discord import Game, Forbidden
 from discord.ext import commands
@@ -48,7 +49,7 @@ async def on_message(message):
     elif isinstance(message.channel, discord.abc.PrivateChannel):
         return
 
-    if message.channel.id == 676396908511756298:
+    if message.channel.id == 648282608106733569:
         lines = str(message.content).strip('`').split("\n")
         for line in lines:
             match = re.match(
@@ -56,7 +57,7 @@ async def on_message(message):
                 "?:playlist\\?list=([\\w\\-]+))(?:&playnext=1&index=1)))+\\s*`{0,3}$", line.strip())
             if match:
                 if match.group(1).isascii():
-                    channel = bot.get_channel(676396687803154465)
+                    channel = bot.get_channel(676374873186238500)
                     f = open("channels.txt", "a+")
                     f.write(line+"\n")
                     await channel.send(f"`cd F:\\Music\\Youtube\\\"{match.group(1).strip()}\"\n"
@@ -79,10 +80,10 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=Game(name=prefix + "help for usage."))
+    systemd.daemon.notify('READY=1')
     print(f" --- Logged in: {bot.user.name} | {bot.user.id} | {version} --- ")
 
 
