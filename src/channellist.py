@@ -52,7 +52,7 @@ class ChannelList(commands.Cog):
     @commands.command(name="channels")
     async def channels(self, ctx, sortchars='abcdefghijklmnopqrstuvwxyz'):
         await getchannellist(ctx.bot, sortchars)
-        page = 0
+        ctx.bot.page = page = 0
         pages = ctx.bot.paginator.pages
         if len(pages) == 1:
             await ctx.send(content=f'{pages[page]}')
