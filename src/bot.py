@@ -49,27 +49,22 @@ async def on_message(message):
     elif isinstance(message.channel, discord.abc.PrivateChannel):
         return
 
-    if message.channel.id == 648282608106733569:
+    if message.channel.id == 676396908511756298:
         lines = str(message.content).strip('`').split("\n")
         for line in lines:
             match = re.match(
                 "`{0,3}(.+)\\s?-+\\s?(((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com))(?:\\/?("
                 "?:playlist\\?list=([\\w\\-]+))(?:&playnext=1&index=1)))+\\s*`{0,3}$", line.strip())
             if match:
-                if match.group(1).isascii():
-                    channel = bot.get_channel(676374873186238500)
-                    f = open("channels.txt", "a+")
-                    f.write(line+"\n")
-                    await channel.send(f"`cd F:\\Music\\Youtube\\\"{match.group(1).strip()}\"\n"
-                                       f"youtube-dl -i -f 140 --audio-quality 9 --write-thumbnail "
-                                       f"--download-archive archive.txt \"{match.group(2)}\"`"
-                                       f"\n\n"
-                                       f"`Requested by:` {message.author.mention}\n`https://discordapp.com/channels/{message.guild.id}/{message.channel.id}/{message.id}`")
-                    f.close()
-                else:
-                    await message.channel.send("Youtube channel name is not supported. If matches official name of "
-                                               "youtube channel, please change to use only ascii characters that most "
-                                               "closely resemble the original.\nFailed on line: `" + line.strip() + "`")
+                channel = bot.get_channel(676396687803154465)
+                f = open("channels.txt", "a+")
+                f.write(line + "\n")
+                await channel.send(f"`cd F:\\Music\\Youtube\\\"{match.group(1).strip()}\"\n"
+                                   f"youtube-dl -i -f 140 --audio-quality 9 --write-thumbnail "
+                                   f"--download-archive archive.txt \"{match.group(2)}\"`"
+                                   f"\n\n"
+                                   f"`Requested by:` {message.author.mention}\n`https://discordapp.com/channels/{message.guild.id}/{message.channel.id}/{message.id}`")
+                f.close()
             elif re.search("((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:["
                            "\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$", line.strip()):
                 await message.channel.send("Youtube link is not valid, make sure you follow the instructions here: "
@@ -79,6 +74,7 @@ async def on_message(message):
                 return
 
     await bot.process_commands(message)
+
 
 @bot.event
 async def on_ready():

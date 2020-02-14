@@ -62,7 +62,7 @@ class ChannelList(commands.Cog):
         await msg.add_reaction(u"\u25B6")
 
     @commands.command(name="search")
-    async def search(self, ctx, query):
+    async def search(self, ctx, *, query):
         await getsearchresponse(ctx.bot, query)
         page = ctx.bot.page
         pages = ctx.bot.paginator.pages
@@ -72,6 +72,11 @@ class ChannelList(commands.Cog):
         else:
             msg = await ctx.send(content=f'{pages[page]}\n\t\tYou are viewing page {page + 1} of {len(pages)}')
         await msg.add_reaction(u"\u25B6")
+
+    @commands.command(name="giverole")
+    async def giverole(self, ctx):
+        await ctx.message.author.add_roles(discord.utils.get(ctx.message.author.guild.roles, name="YT Archive"))
+        await ctx.send("Role given, enjoy.")
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
