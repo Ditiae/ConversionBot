@@ -4,7 +4,7 @@ import discord
 import logging
 import pint
 import re
-import systemd.daemon
+from cysystemd.daemon import notify, Notification
 from configparser import ConfigParser
 from discord import Game, Forbidden
 from discord.ext import commands
@@ -83,7 +83,7 @@ async def on_message(message):
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=Game(name=prefix + "help for usage."))
-    systemd.daemon.notify('READY=1')
+    notify(Notification.READY)
     print(f" --- Logged in: {bot.user.name} | {bot.user.id} | {version} --- ")
 
 
