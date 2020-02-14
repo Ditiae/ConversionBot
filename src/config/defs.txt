@@ -1,0 +1,172 @@
+#aliases
+@alias degC = celsius = celcius = c = °c = cels = celc
+@alias degF = fahrenheit = f = °f = fahr
+@alias degK = kelvin = k = °k = kelv
+@alias degR = rankine = r = °r = rank
+@alias ampere = galvat
+@alias x_unit_Cu = xunit = siegbahn
+
+#prefixes
+hemi- = 0.5 = _ = half-
+double- = 2.0
+triple- = 3.0 = _ = treble-
+
+# length
+silicon_d220 = 1.920155716e-10 * meter
+siliconlattice = 2.8284271247461900976033774484193961571393437507538961 * silicon_d220
+bicron = picometer
+rack_unit = 1.75 * inch = OneU
+TwoU_rack_unit = 3.5 * inch = TwoU
+ThreeU_rack_unit = 5.25 * inch = ThreeU
+FourU_rack_unit = 7 * inch = FourU
+hand = 4 * inch
+light_nanosecond = 29.9792458 * centimeter = lns
+light_second = 299792458 * meter
+light_minute = 60 * light_second
+light_hour = 3600 * light_second
+light_day = 86400 * light_second
+light_week = 604800 * light_second
+metric_foot = 300 * millimeter
+horse = 8 * feet
+earth_circumference = 40075016.686 * meter = _ = earth_circ
+earth_to_moon = 380000 * kilometer = e2m
+siriometer = 15.8 * light_year
+smoot = 67 * inch
+barleycorn = inch / 3
+button = inch / 12
+girah = 2.25 * inch
+jow = 0.25 * inch
+poppyseed = barleycorn / 5
+ligne = 2.2558291 * millimeter
+french_point = ligne / 12
+pouce = ligne * 12
+french_foot = pouce * 12
+toise = 864 * ligne
+arpent = 180 * french_foot
+french_arpent = 220 * french_foot
+pes = 0.971 * feet
+unciae = pes / 12
+ungile = 0.75 * inch
+spat = 1e12 * meter
+potrzebie = 2.263348517438173216473 * mm
+altuve = 65 * inch
+beard_second = 5 * nanometer
+sheppey = 0.875 * mile
+
+#area
+outhouse = 1e-6 * barn
+shed = 1e-24 * barn
+vergee = 8100 * feet ** 2
+brass = 100 * feet ** 2
+morgen = 0.856532 * hectare
+carucate = 120 * acre
+hide = 120 * acre
+oxgang = 15 * acre
+virgate = 30 * acre
+quinaria = 4.2 cm ** 2
+irish_acre = chain * furlong
+tathe = 60 * irish_acre
+united_states = 9833520 * kilometer ** 2
+canada = 9984670 * kilometer ** 2
+russia = 17098246 * kileomter ** 2
+australia = 7692024 * kilometer ** 2
+wales = 20779 * kilometer ** 2
+netherlands = 1386 * kilometer ** 2
+belgium = 30528 * kilometer ** 2
+denmark = 588 * kilometer ** 2
+
+#volume
+oldliter = 1.000028 decimeter ** 3
+demiard = 238 * mL
+chopine = 476 * mL
+pinte = 952 * mL
+cord = 128 * feet ** 3
+twenty_foot_equivalent = 1360 * feet ** 3 = 20fe
+acre_foot = 43560 * feet ** 3
+melbourne_cricket_ground = 1574000 * meter ** 3 = _ = melcrigro
+sydney_harbour = 562000000 * meter ** 3 = _ = sydharb
+grand_canyon = 4170 * kilometer ** 3
+ngogn = 1000 * potrzebie ** 3
+
+#mass
+bag_of_cement = 94 * pound = bos = _ = bags_of_cement
+quintal = 100 * kilogram
+mercury = (3.301e23) * kilogram
+venus = (4.867e24) * kilogram
+earth = (6.046e24) * kilogram
+mars = (6.417e23) * kilogram
+jupiter = (1.899e27) * kilogram
+uranus = (8.682e25) * kilogram
+neptune = (1.024e26) * kilogram
+moon = (7.346e22) * kilogram
+io = (8.93e22) * kilogram
+europa = (4.80e22) * kilogram
+ganymede = (1.48e23) * kilogram
+callisto = (1.080e23) * kilogram
+titan = (1.35e23) * kilogram
+titania = (3.52e21) * kilogram
+oberon = (3.01e21) * kilogram
+triton = (2.14e22) * kilogram
+pluto = (1.303e22) * kilogram
+ceres = (9.3e23) * kilogram
+vesta = (2.6e20) * kilogram
+pallas = (2.0e20) * kilogram
+firkin = 90 * pound
+
+#time
+galactic_year = 250000000 * year = gy
+dog_year = 52 * day = dy
+sol = ‭88775.244‬ * second
+light_foot = 1 * nanosecond
+light_meter = 3.3 * nanosecond
+kermit = 14.4 * minute
+moment = 90 * seconds
+third = second / 60
+fourth = third / 60
+
+#angle
+furman = 360 * degree / 65536
+milliradian = radian / 1000
+
+#energy
+gasoline_gallon = (1.212 * 1e8) * joule
+hiroshima_bomb = (6 * 1e13) * joule
+halifax_explosion = (1.26 * 1e13) * joule
+quad = 1e15 * BTU
+foe = 1e44 * joule
+
+#radiation
+banana = 78 * nanosievert
+
+#information
+nibble = 4 * bit = nibble
+crumb = 2 * bit
+
+#power
+donkey_power = 250 * watt
+pirate_ninja = kWh / sol
+
+#force
+sthene = tonne * meter / second ** 2 = _ = funal
+
+#pressure
+pieze = sthene / meters ** 2
+vac = millibar
+
+#frequency
+fresnel = 1e12 * Hz
+
+#photoelasticity
+[photoelasticity] = [area] ** 2 / [force]
+brewster = micron ** 2 / N
+
+#resistivity
+preece = 1e13 * ohm * meter
+
+#meme
+milk = 666 * slug
+ender = 3 terabyte / month
+
+
+
+
