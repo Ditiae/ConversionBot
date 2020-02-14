@@ -49,14 +49,14 @@ async def on_message(message):
     elif isinstance(message.channel, discord.abc.PrivateChannel):
         return
 
-    if message.channel.id == 676396908511756298:
+    if message.channel.id == 648282608106733569:
         lines = str(message.content).strip('`').split("\n")
         for line in lines:
             match = re.match(
                 "`{0,3}(.+)\\s?-+\\s?(((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com))(?:\\/?("
                 "?:playlist\\?list=([\\w\\-]+))(?:&playnext=1&index=1)))+\\s*`{0,3}$", line.strip())
             if match:
-                channel = bot.get_channel(676396687803154465)
+                channel = bot.get_channel(676374873186238500)
                 f = open("channels.txt", "a+")
                 f.write(line + "\n")
                 await channel.send(f"`cd F:\\Music\\Youtube\\\"{match.group(1).strip()}\"\n"
