@@ -4,11 +4,13 @@ from discord.ext import commands
 
 async def getchannellist(bot, sortchars):
     bot.paginator.clear()
-    f = open("channels.txt", "r")
+    f = open("channels.txt", "r", encoding='utf16')
     lines = f.readlines()
     lines.sort(key=str.lower)
     for x in lines:
-        if x[0].lower() in sortchars:
+        if sortchars == '':
+            bot.paginator.add_line(x)
+        elif x[0].lower() in sortchars:
             bot.paginator.add_line(x)
     if len(bot.paginator.pages) == 0:
         bot.paginator.add_line("No channels found.")
@@ -16,7 +18,7 @@ async def getchannellist(bot, sortchars):
 
 async def getsearchresponse(bot, query):
     bot.paginator.clear()
-    f = open("channels.txt", "r")
+    f = open("channels.txt", "r", encoding='utf16')
     lines = f.readlines()
     lines.sort(key=str.lower)
     for x in lines:
@@ -50,7 +52,7 @@ class ChannelList(commands.Cog):
                 await msg.add_reaction(reaction)
 
     @commands.command(name="channels")
-    async def channels(self, ctx, sortchars='abcdefghijklmnopqrstuvwxyz'):
+    async def channels(self, ctx, sortchars=''):
         await getchannellist(ctx.bot, sortchars)
         ctx.bot.page = page = 0
         pages = ctx.bot.paginator.pages
