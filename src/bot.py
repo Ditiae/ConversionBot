@@ -59,7 +59,11 @@ async def on_message(message):
                     channel = bot.get_channel(676396687803154465)
                     f = open("channels.txt", "a+")
                     f.write(line+"\n")
-                    await channel.send(f"`cd F:\\Music\\Youtube\\\"{match.group(1).strip()}\"\nyoutube-dl -i -f 140 --audio-quality 9 --write-thumbnail --download-archive archive.txt \"{match.group(2)}\"`\n\n`Requested by:` {message.author.mention}\n`https://discordapp.com/channels/{message.guild.id}/{message.channel.id}/{message.id}`")
+                    await channel.send(f"`cd F:\\Music\\Youtube\\\"{match.group(1).strip()}\"\n"
+                                       f"youtube-dl -i -f 140 --audio-quality 9 --write-thumbnail "
+                                       f"--download-archive archive.txt \"{match.group(2)}\"`"
+                                       f"\n\n"
+                                       f"`Requested by:` {message.author.mention}\n`https://discordapp.com/channels/{message.guild.id}/{message.channel.id}/{message.id}`")
                     f.close()
                 else:
                     await message.channel.send("Youtube channel name is not supported. If matches official name of "
