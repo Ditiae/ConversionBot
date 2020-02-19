@@ -51,27 +51,47 @@ async def on_message(message):
         return
 
     if message.channel.id == 648282608106733569:
+        num = 0
+        fails = ""
+        dupes = ""
         lines = str(message.content).strip('`').split("\n")
         for line in lines:
             match = re.match(
-                "`{0,3}(.+)\\s?-+\\s?(((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com))(?:\\/?("
-                "?:playlist\\?list=([\\w\\-]+))(?:&playnext=1&index=1)))+\\s*`{0,3}$", line.strip())
+                "^`{0,3}(.+)\\s+-+\\s+(((http|https)://|)(www\\.|)youtube\\.com\\/(channel\\/|user\\/)(["
+                "a-zA-Z0-9_\\-]{1,}))\\s*`{0,3}", line.strip())
             if match:
                 channel = bot.get_channel(676374873186238500)
-                with io.open("channels.txt", "a+", encoding='utf16') as f:
-                    f.write(line + "\n")
-                await channel.send(f"`youtube-dl -i -f 140 --audio-quality 9 --write-thumbnail "
-                                   f"--download-archive archive.txt \"{match.group(2)}\"`"
-                                   f"\n\n"
-                                   f"`Requested by:` {message.author.mention}\n`https://discordapp.com/channels/{message.guild.id}/{message.channel.id}/{message.id}`")
+                with io.open("channels.txt", "r", encoding='utf16') as f:
+                    if match.group(1).lower() in f.read().lower():
+                        dupes += match.group(1)
                 f.close()
-            elif re.search("((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:["
-                           "\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$", line.strip()):
-                await message.channel.send("Youtube link is not valid, make sure you follow the instructions here: "
-                                           "`https://i.imgur.com/g4ehtFx.gifv`. \n If the youtube channel has an odd "
-                                           "format, follow the instructions here to get the link instead"
-                                           ": `https://i.imgur.com/asZIRSg.gifv`\nFailed on line: `" + line.strip() + "`")
+                with io.open("channels.txt", "a+", encoding='utf16') as f:
+                    if dupes:
+                        pass
+                    else:
+                        num += 1
+                        f.write(f"{match.group(1)} - {match.group(2)}")
+                        await channel.send(f"`youtube-dl -i -f 251/140/bestaudio --write-info-json --write-thumbnail "
+                                           f"--download-archive archive.txt \"{match.group(2)}\"`"
+                                           f"\n\n"
+                                           f"`Requested by:` {message.author.mention}\nhttps://discordapp.com/channels/"
+                                           f"{message.guild.id}/{message.channel.id}/{message.id}")
+                f.close()
+            elif re.search("((?:https?:)?//)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(/(?:["
+                           "\\w\\-]+\\?v=|embed/|v/)?)([\\w\\-]+)(\\S+)?$", line.strip()):
+                fails += "Failed on line: `" + line.strip() + "`\n"
+            else:
                 return
+
+        response = ""
+        if num > 0:
+            response += f"Added {num} links!\n"
+        if dupes:
+            response += f"Your links had these duplicates: \n{dupes}\n"
+        if fails:
+            response += f"Failed on these links: \n{fails}\n " \
+                        f"Use ~ahelp to see best way to input links."
+        await message.channel.send(message)
 
     await bot.process_commands(message)
 

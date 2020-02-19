@@ -22,7 +22,7 @@ async def getsearchresponse(bot, query):
     lines = f.readlines()
     lines.sort(key=str.lower)
     for x in lines:
-        if query.lower() in x.lower():
+        if query.lower() in x.rsplit(" - ", 1)[0].lower():
             bot.paginator.add_line(x)
     if len(bot.paginator.pages) == 0:
         bot.paginator.add_line("No channels found.")
@@ -33,8 +33,8 @@ class ChannelList(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="channellist")
-    async def channellist(self, ctx):
+    @commands.command(name="channelsfile", aliases=["chanout", "gibfile"])
+    async def channelsfile(self, ctx):
         await ctx.send(file=discord.File('channels.txt'))
 
     async def updatemsg(self, msg):
@@ -51,8 +51,8 @@ class ChannelList(commands.Cog):
             for reaction in reactions:
                 await msg.add_reaction(reaction)
 
-    @commands.command(name="channels")
-    async def channels(self, ctx, sortchars=''):
+    @commands.command(name="listchannels", aliases=["listchan", "lchan"])
+    async def listchannels(self, ctx, sortchars=''):
         await getchannellist(ctx.bot, sortchars)
         ctx.bot.page = page = 0
         pages = ctx.bot.paginator.pages
@@ -65,6 +65,9 @@ class ChannelList(commands.Cog):
 
     @commands.command(name="search")
     async def search(self, ctx, *, query):
+        if len(query) < 3:
+            await ctx.send("Search request must be at least 3 characters in length.")
+            return
         await getsearchresponse(ctx.bot, query)
         page = ctx.bot.page
         pages = ctx.bot.paginator.pages
@@ -74,6 +77,10 @@ class ChannelList(commands.Cog):
         else:
             msg = await ctx.send(content=f'{pages[page]}\n\t\tYou are viewing page {page + 1} of {len(pages)}')
         await msg.add_reaction(u"\u25B6")
+
+    @commands.command(name="ahelp")
+    async def ahelp(self, ctx):
+        await ctx.send("use channel link")
 
     @commands.command(name="giverole")
     @commands.cooldown(1, 60, commands.BucketType.user)
