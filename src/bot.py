@@ -91,7 +91,7 @@ async def on_message(message):
         if fails:
             response += f"Failed on these links: \n{fails}\n " \
                         f"Use ~ahelp to see best way to input links."
-        await message.channel.send(message)
+        await message.channel.send(response)
 
     await bot.process_commands(message)
 
