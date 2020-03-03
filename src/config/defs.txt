@@ -5,6 +5,7 @@
 @alias degR = rankine = r = °r = rank
 @alias ampere = galvat
 @alias x_unit_Cu = xunit = siegbahn
+@alias meter = Meter
 
 #prefixes
 hemi- = 0.5 = _ = half-

@@ -1,3 +1,4 @@
+import codecs
 import datetime
 import os
 import io
@@ -10,10 +11,10 @@ from configparser import ConfigParser
 from discord import Game, Forbidden
 from discord.ext import commands
 from discord.ext.commands import CommandNotFound, DisabledCommand, CheckFailure, MissingRequiredArgument, \
-    BadArgument, TooManyArguments, UserInputError, CommandOnCooldown
+    BadArgument, TooManyArguments, UserInputError, CommandOnCooldown, CommandInvokeError
 
 config = ConfigParser()
-config.read('./config/config.ini')
+config.read_file(codecs.open('./config/config.ini', "r", "utf8"))
 logger = logging
 TOKEN = os.environ['TOKEN']
 prefix = config["General"]["prefix"]
@@ -60,18 +61,20 @@ async def on_message(message):
                 "^`{0,3}(.+)\\s+-+\\s+(((http|https)://|)(www\\.|)youtube\\.com\\/(channel\\/|user\\/)(["
                 "a-zA-Z0-9_\\-]{1,}))\\s*`{0,3}", line.strip())
             if match:
+                dupe = False
                 channel = bot.get_channel(676374873186238500)
                 with io.open("channels.txt", "r", encoding='utf16') as f:
                     if match.group(1).lower() in f.read().lower():
                         dupes += match.group(1)
+                        dupe = True
                 f.close()
                 with io.open("channels.txt", "a+", encoding='utf16') as f:
-                    if dupes:
+                    if dupe:
                         pass
                     else:
                         num += 1
                         f.write(f"{match.group(1)} - {match.group(2)}")
-                        await channel.send(f"`youtube-dl -i -f 251/140/bestaudio --write-info-json --write-thumbnail "
+                        await channel.send(f"\"{match.group(1)}\": `youtube-dl -i -f 251/140/bestaudio --write-info-json --write-thumbnail "
                                            f"--download-archive archive.txt \"{match.group(2)}\"`"
                                            f"\n\n"
                                            f"`Requested by:` {message.author.mention}\nhttps://discordapp.com/channels/"
@@ -81,7 +84,11 @@ async def on_message(message):
                            "\\w\\-]+\\?v=|embed/|v/)?)([\\w\\-]+)(\\S+)?$", line.strip()):
                 fails += "Failed on line: `" + line.strip() + "`\n"
             else:
-                return
+                pass
+
+        if num == 0 and not dupes and not fails:
+            await message.delete()
+            return
 
         response = ""
         if num > 0:
@@ -106,6 +113,7 @@ async def on_ready():
 @bot.event
 async def on_command_error(ctx, error):
     logger.error(f"Error {ctx}, {error}")
+    print(type(error))
     errors = {
         CommandNotFound: 'Command not found.',
         DisabledCommand: 'Command has been disabled.',
@@ -115,7 +123,8 @@ async def on_command_error(ctx, error):
         TooManyArguments: 'Too many arguments given for command.',
         UserInputError: 'User input error.',
         CommandOnCooldown: f'{error}',
-        Forbidden: 'I do not have the correct permissions.'
+        Forbidden: 'I do not have the correct permissions.',
+        CommandInvokeError: f'You caused an error, congrats. {bot.get_emoji(453404888756518923)}'
     }
     for error_type, text in errors.items():
         if isinstance(error, error_type):

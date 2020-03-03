@@ -1,4 +1,5 @@
 from discord.ext import commands
+from pint import UndefinedUnitError, DimensionalityError
 
 
 def numeralconvert(message):
@@ -31,10 +32,22 @@ class Convert(commands.Cog):
 
         fro, to = message.split(" to ")
         val, fro = fro.split(" ")
+        val = val.replace(",", "")
         print(fro)
         print(to)
-
-        await ctx.send('{:,P}'.format(ctx.bot.quantity(float(val), fro).to(to)))
+        try:
+            float(val)
+        except ValueError:
+            await ctx.send("That is not an accepted quantity.")
+            return
+        try:
+            await ctx.send('{:,P}'.format(ctx.bot.quantity(float(val), fro).to(to)))
+        except UndefinedUnitError as e:
+            await ctx.send(f"You input an incorrect unit: {str(e)}.")
+            return
+        except DimensionalityError as e:
+            await ctx.send(f"Those units have incorrect dimensions: {str(e)}.")
+            return
 
 
 def setup(bot):
